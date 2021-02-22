@@ -10,7 +10,7 @@ USER 0
 
 RUN yum update -y && \
     yum install -y gcc make autoconf automake gettext-devel git \
-                   rpm-build libxslt python-lxml
+                   rpm-build libxslt python-lxml python3 python3-pip
 
 RUN git clone --single-branch -b $WOK_VERSION https://github.com/kimchi-project/wok.git && \
     cd wok && \
