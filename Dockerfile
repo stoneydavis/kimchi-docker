@@ -1,8 +1,8 @@
 FROM centos/devtoolset-7-toolchain-centos7 as builder
 MAINTAINER Piotr Tylenda <tylenda.piotr@gmail.com>
 
-ARG KIMCHI_VERSION=2.5.0
-ARG WOK_VERSION=2.5.0
+ARG KIMCHI_VERSION=3.0.0
+ARG WOK_VERSION=3.0.0
 
 WORKDIR /src
 
