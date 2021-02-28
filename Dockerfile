@@ -1,5 +1,4 @@
-FROM centos/devtoolset-7-toolchain-centos7 as builder
-MAINTAINER Piotr Tylenda <tylenda.piotr@gmail.com>
+FROM debian:buster-backports as builder
 
 ARG KIMCHI_VERSION=3.0.0
 ARG WOK_VERSION=3.0.0
@@ -8,58 +7,41 @@ WORKDIR /src
 
 USER 0
 
-RUN yum update -y && \
-    yum install -y gcc make autoconf automake gettext-devel git \
-                   rpm-build libxslt python-lxml python3 python3-pip
+RUN apt update && apt install -y python3-pip && apt install -y gcc make autoconf automake git python3-pip python3-requests python3-mock gettext pkgconf xsltproc python3-dev pep8 pyflakes python3-yaml
 
 RUN git clone --single-branch -b $WOK_VERSION https://github.com/kimchi-project/wok.git && \
     cd wok && \
     ./autogen.sh --system && \
     make && \
-    make rpm
+    make deb
 
 RUN git clone --single-branch -b $KIMCHI_VERSION https://github.com/kimchi-project/kimchi.git && \
     cd kimchi && \
     ./autogen.sh --system && \
     make && \
-    make rpm
+    make deb
 
+FROM debian:buster-backports
 
-
-FROM centos/systemd
-MAINTAINER Piotr Tylenda <tylenda.piotr@gmail.com>
-
-ARG KIMCHI_VERSION=2.5.0
-ARG WOK_VERSION=2.5.0
+ARG KIMCHI_VERSION=3.0.0
+ARG WOK_VERSION=3.0.0
 
 WORKDIR /tmp
 
-COPY --from=builder /src/wok/rpm/RPMS/noarch/wok-$WOK_VERSION-0.el7.noarch.rpm wok.el7.noarch.rpm
-COPY --from=builder /src/kimchi/rpm/RPMS/noarch/kimchi-$WOK_VERSION-0.el7.noarch.rpm kimchi.el7.noarch.rpm
+COPY --from=builder /src/wok/*.deb /tmp/
+COPY --from=builder /src/kimchi/*.deb /tmp/
 
-RUN yum update -y && \
-    yum install -y epel-release && \
-    yum update -y && \
-    yum install -y python-cherrypy python-cheetah PyPAM m2crypto \
-                   python-jsonschema python-psutil python-ldap \
-                   python-lxml nginx openssl python-websockify \
-                   logrotate fontawesome-fonts python-websockify \
-                   python-jsonschema nginx python-psutil && \
-    yum install -y libvirt-python libvirt libvirt-daemon-config-network \
-                   qemu-kvm python-ethtool sos python-ipaddr nfs-utils \
-                   iscsi-initiator-utils pyparted python-libguestfs \
-                   libguestfs-tools novnc spice-html5 \
-                   python-configobj python-magic python-paramiko \
-                   python-pillow novnc python-jsonschema python-psutil spice-html5 && \
-    yum clean all -y && \
-    rm -rf /var/cache/yum
+ARG DEBIAN_FRONTEND=noninteractive
 
+RUN apt update && apt upgrade -y && apt install -y python3-psutil \
+    python3-ldap python3-lxml python3-websockify python3-jsonschema openssl \
+    nginx python3-cherrypy3 python3-cheetah python3-pampy python3-m2crypto \
+    gettext python3-openssl apt-utils
 
-RUN yum install -y wok.el7.noarch.rpm && \
-    yum install -y kimchi.el7.noarch.rpm && \
-    rm -f wok.el7.noarch.rpm kimchi.el7.noarch.rpm && \
+RUN apt install ./wok-$WOK_VERSION-0.debian.noarch.deb -y && \
+    apt install ./kimchi-$KIMCHI_VERSION-0.noarch.deb -y && \
     systemctl enable wokd.service
-
+RUN rm -rf /var/lib/apt/lists/*
 EXPOSE 8001 8010
 
 CMD ["/usr/sbin/init"]
