@@ -7,7 +7,7 @@ WORKDIR /src
 
 USER 0
 
-RUN apt update && apt install -y python3-pip && apt install -y gcc make autoconf automake git python3-pip python3-requests python3-mock gettext pkgconf xsltproc python3-dev pep8 pyflakes python3-yaml
+RUN apt-get update && apt-get install -y python3-pip gcc make autoconf automake git python3-pip python3-requests python3-mock gettext pkgconf xsltproc python3-dev pep8 pyflakes python3-yaml
 
 RUN git clone --single-branch -b $WOK_VERSION https://github.com/kimchi-project/wok.git && \
     cd wok && \
@@ -33,13 +33,13 @@ COPY --from=builder /src/kimchi/*.deb /tmp/
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt update && apt upgrade -y && apt install -y python3-psutil \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y python3-psutil \
     python3-ldap python3-lxml python3-websockify python3-jsonschema openssl \
     nginx python3-cherrypy3 python3-cheetah python3-pampy python3-m2crypto \
     gettext python3-openssl apt-utils
 
-RUN apt install ./wok-$WOK_VERSION-0.debian.noarch.deb -y && \
-    apt install ./kimchi-$KIMCHI_VERSION-0.noarch.deb -y && \
+RUN apt-get install ./wok-$WOK_VERSION-0.debian.noarch.deb -y && \
+    apt-get install ./kimchi-$KIMCHI_VERSION-0.noarch.deb -y && \
     systemctl enable wokd.service
 RUN rm -rf /var/lib/apt/lists/*
 EXPOSE 8001 8010
