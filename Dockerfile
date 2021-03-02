@@ -40,8 +40,7 @@ RUN apt-get update && apt-get install -y python3-psutil \
 
 RUN dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb; sh -x /var/lib/dpkg/info/wok.postinst
 RUN dpkg -i /tmp/kimchi-$KIMCHI_VERSION-0.noarch.deb
-RUN systemctl enable wokd.service
 RUN rm -rf /var/lib/apt/lists/*
 EXPOSE 8001 8010
 
-CMD ["/usr/sbin/init"]
+CMD ["/usr/bin/wokd"]
