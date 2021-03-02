@@ -42,5 +42,5 @@ RUN dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb; sh -x /var/lib/dpkg/info/
 RUN dpkg -i /tmp/kimchi-$KIMCHI_VERSION-0.noarch.deb
 RUN rm -rf /var/lib/apt/lists/*
 EXPOSE 8001 8010
-
-CMD ["/usr/bin/wokd"]
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+CMD ["/docker-entrypoint.sh"]
