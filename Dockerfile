@@ -38,7 +38,7 @@ RUN apt-get update && apt-get install -y python3-psutil \
     nginx python3-cherrypy3 python3-cheetah python3-pampy python3-m2crypto \
     gettext python3-openssl apt-utils --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-RUN dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb
+RUN dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb; sh -x /var/lib/dpkg/info/wok.postinst
 RUN dpkg -i /tmp/kimchi-$KIMCHI_VERSION-0.noarch.deb
 RUN systemctl enable wokd.service
 RUN rm -rf /var/lib/apt/lists/*
