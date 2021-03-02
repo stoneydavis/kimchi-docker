@@ -43,4 +43,5 @@ RUN dpkg -i /tmp/kimchi-$KIMCHI_VERSION-0.noarch.deb
 RUN rm -rf /var/lib/apt/lists/*
 EXPOSE 8001 8010
 COPY docker-entrypoint.sh /docker-entrypoint.sh
+USER kimchi
 CMD ["/docker-entrypoint.sh"]
