@@ -38,9 +38,9 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y python3-psutil \
     nginx python3-cherrypy3 python3-cheetah python3-pampy python3-m2crypto \
     gettext python3-openssl apt-utils
 
-RUN apt-get install ./wok-$WOK_VERSION-0.debian.noarch.deb -y && \
-    apt-get install ./kimchi-$KIMCHI_VERSION-0.noarch.deb -y && \
-    systemctl enable wokd.service
+RUN apt-get install ./wok-$WOK_VERSION-0.debian.noarch.deb -y
+RUN apt-get install ./kimchi-$KIMCHI_VERSION-0.noarch.deb -y
+RUN systemctl enable wokd.service
 RUN rm -rf /var/lib/apt/lists/*
 EXPOSE 8001 8010
 
