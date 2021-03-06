@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  kimchi:
+    image: blade2005/kimchi
+    container_name: kimchi
+    ports:
+      - "8010:8010"
+      - "8001:8001"
