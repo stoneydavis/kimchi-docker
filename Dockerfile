@@ -33,14 +33,16 @@ COPY --from=builder /src/kimchi/*.deb /tmp/
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y python3-psutil \
-    python3-ldap python3-lxml python3-websockify python3-jsonschema openssl \
-    nginx python3-cherrypy3 python3-cheetah python3-pampy python3-m2crypto \
-    gettext python3-openssl apt-utils --no-install-recommends && rm -rf /var/lib/apt/lists/*
-
-RUN dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb; sh -x /var/lib/dpkg/info/wok.postinst
-RUN dpkg -i /tmp/kimchi-$KIMCHI_VERSION-0.noarch.deb
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y python3-psutil procps python3-ldap python3-lxml \
+    python3-websockify python3-jsonschema openssl nginx python3-cherrypy3 \
+    python3-cheetah python3-pampy python3-m2crypto gettext python3-openssl \
+    apt-utils --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/* && \
+    dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb; \
+    sh -x /var/lib/dpkg/info/wok.postinst; \
+    dpkg -i /tmp/kimchi-$KIMCHI_VERSION-0.noarch.deb; \
+    rm -rf /var/lib/apt/lists/*
 EXPOSE 8001 8010
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 USER root
