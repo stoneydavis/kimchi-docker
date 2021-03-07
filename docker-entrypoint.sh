@@ -4,7 +4,7 @@ set -x
 # Reset root pw to a random
 git clone https://gist.github.com/blade2005/fb9299900a9645fb95e03fb530bdd0ee.git genpw && \
 chmod +x genpw/genpw && \
-pw=$(genpw/genpw -q -s -l 12) && \
+pw=$(python3 genpw/genpw -q -s -l 12) && \
 echo "root:$pw" | chpasswd && 
 echo "New password is '${pw}'"
 
