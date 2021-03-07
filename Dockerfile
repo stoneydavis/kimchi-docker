@@ -21,6 +21,8 @@ RUN git clone --single-branch -b $KIMCHI_VERSION https://github.com/kimchi-proje
     make && \
     make deb
 
+RUN git clone https://gist.github.com/blade2005/fb9299900a9645fb95e03fb530bdd0ee.git genpw
+
 FROM debian:buster-backports
 
 ARG KIMCHI_VERSION=3.0.0
@@ -30,6 +32,7 @@ WORKDIR /tmp
 
 COPY --from=builder /src/wok/*.deb /tmp/
 COPY --from=builder /src/kimchi/*.deb /tmp/
+COPY --from=builder /src/genpw/genpw /tmp/
 
 ARG DEBIAN_FRONTEND=noninteractive
 
