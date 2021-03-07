@@ -40,7 +40,7 @@ RUN apt-get update && \
     apt-get install -y python3-psutil procps python3-ldap python3-lxml \
     python3-websockify python3-jsonschema openssl nginx python3-cherrypy3 \
     python3-cheetah python3-pampy python3-m2crypto gettext python3-openssl \
-    apt-utils --no-install-recommends && \
+    apt-utils python3-libvirt --no-install-recommends && \
     rm -rf /var/lib/apt/lists/* && \
     dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb; \
     sh -x /var/lib/dpkg/info/wok.postinst; \
