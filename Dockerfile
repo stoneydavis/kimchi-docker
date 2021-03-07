@@ -51,7 +51,7 @@ RUN apt-get install -y --no-install-recommends \
 RUN apt-get install -y --no-install-recommends \
     apt-utils gettext procps python3-openssl
 
-RUN dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb || sh -x /var/lib/dpkg/info/wok.postinst
+RUN dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb; echo "Systemd sucks so this fails"
 RUN dpkg -i /tmp/kimchi-$KIMCHI_VERSION-0.noarch.deb
 RUN rm -rf /var/lib/apt/lists/*
 
