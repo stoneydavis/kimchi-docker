@@ -37,10 +37,15 @@ COPY --from=builder /src/genpw/genpw /tmp/
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get install -y python3-psutil procps python3-ldap python3-lxml \
-    python3-websockify python3-jsonschema openssl nginx python3-cherrypy3 \
-    python3-cheetah python3-pampy python3-m2crypto gettext python3-openssl \
-    apt-utils python3-libvirt --no-install-recommends && \
+    apt-get install -y --no-install-recommends \
+    apt-utils gettext gettext-devel libguestfs-tools libnl-route-3-dev \
+    libvirt-clients libvirt-daemon-system libvirt0 logrotate nfs-common nginx \
+    novnc open-iscsi openssl procps python3-cheetah python3-cherrypy \
+    python3-cherrypy3 python3-configobj python3-ethtool python3-guestfs \
+    python3-jsonschema python3-ldap python3-libvirt python3-lxml \
+    python3-m2crypto python3-magic python3-openssl python3-pam python3-pampy \
+    python3-paramiko python3-parted python3-pil python3-psutil \
+    python3-websockify qemu-kvm sosreport spice-html5 systemd && \
     rm -rf /var/lib/apt/lists/* && \
     dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb; \
     sh -x /var/lib/dpkg/info/wok.postinst; \
