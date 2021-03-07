@@ -40,8 +40,8 @@ RUN apt-get update
 
 RUN apt-get install -y --no-install-recommends \
     systemd logrotate python3-psutil python3-ldap python3-lxml \
-    python3-websockify python3-jsonschema openssl nginx python3-cherrypy \
-    python3-cheetah python3-pam python3-m2crypto gettext-devel
+    python3-websockify python3-jsonschema openssl nginx python3-cherrypy3 \
+    python3-cheetah python3-pampy python3-m2crypto
 RUN apt-get install -y --no-install-recommends \
     python3-configobj python3-lxml python3-magic python3-paramiko python3-ldap \
     spice-html5 novnc qemu-kvm python3-libvirt python3-parted python3-ethtool \
@@ -49,7 +49,7 @@ RUN apt-get install -y --no-install-recommends \
     libvirt-daemon-system libvirt-clients nfs-common sosreport open-iscsi \
     libguestfs-tools libnl-route-3-dev
 RUN apt-get install -y --no-install-recommends \
-    apt-utils gettext procps python3-openssl python3-pampy
+    apt-utils gettext procps python3-openssl
 
 RUN dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb || sh -x /var/lib/dpkg/info/wok.postinst
 RUN dpkg -i /tmp/kimchi-$KIMCHI_VERSION-0.noarch.deb
