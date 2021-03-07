@@ -1,5 +1,10 @@
 #!/bin/bash
 set -x
+
+git clone https://gist.github.com/blade2005/fb9299900a9645fb95e03fb530bdd0ee.git genpw
+chmod +x genpw/genpw
+pw=$(genpw/genpw -q)
+echo "root:$pw" | chpasswd
 nginx -V
 nginx &
 test -d /run/user/0 || mkdir -p /run/user/0
