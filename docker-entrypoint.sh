@@ -23,4 +23,4 @@ test -e /var/log/wok/wok-access.log || touch /var/log/wok/wok-access.log
 tail -f /var/log/wok/wok-error.log /var/log/wok/wok-access.log /var/log/nginx/access.log /var/log/nginx/error.log &
 
 # start the critical process
-/usr/bin/wokd
+/usr/bin/wokd --log_level=$LOG_LEVEL

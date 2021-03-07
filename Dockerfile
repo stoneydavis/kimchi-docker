@@ -49,4 +49,6 @@ RUN apt-get update && \
 EXPOSE 8001 8010
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 USER root
+ARG LOG_LEVEL=info
+ENV LOG_LEVEL=$LOG_LEVEL
 CMD ["/docker-entrypoint.sh"]
