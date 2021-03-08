@@ -33,7 +33,7 @@ WORKDIR /tmp
 COPY --from=builder /src/wok/*.deb /tmp/
 COPY --from=builder /src/kimchi/*.deb /tmp/
 COPY --from=builder /src/genpw/genpw /tmp/
-COPY --from=builder /src/kimchi/requirements-UBUNTU.txt /tmp/
+COPY --from=builder /src/kimchi/requirements-UBUNTU.txt /tmp/requirements.txt
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
