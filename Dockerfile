@@ -33,7 +33,7 @@ WORKDIR /tmp
 COPY --from=builder /src/wok/*.deb /tmp/
 COPY --from=builder /src/kimchi/*.deb /tmp/
 COPY --from=builder /src/genpw/genpw /tmp/
-
+COPY --from=builder /src/kimchi/requirements-UBUNTU.txt /tmp/
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
@@ -51,7 +51,7 @@ RUN apt-get install -y --no-install-recommends \
 RUN apt-get install -y --no-install-recommends \
     apt-utils gettext procps python3-openssl python3-distro python3-distutils \
     python3-pip
-RUN pip3 install ipaddr==2.2.0
+RUN pip3 install -r /tmp/requirements.txt
 
 RUN dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb; echo "Systemd sucks so this fails"
 RUN dpkg -i /tmp/kimchi-$KIMCHI_VERSION-0.noarch.deb
