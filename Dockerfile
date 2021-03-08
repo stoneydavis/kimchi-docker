@@ -50,7 +50,7 @@ RUN apt-get install -y --no-install-recommends \
     libguestfs-tools libnl-route-3-dev
 RUN apt-get install -y --no-install-recommends \
     apt-utils gettext procps python3-openssl python3-distro python3-distutils \
-    python3-pip
+    python3-pip python3-setuptools
 RUN pip3 install -r /tmp/requirements.txt
 
 RUN dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb; echo "Systemd sucks so this fails"
