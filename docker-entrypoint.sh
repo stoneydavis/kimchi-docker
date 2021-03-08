@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # Reset root pw to a random
-pw=$(python3 /tmp/genpw -q -s -l 12) && \
-echo "root:$pw" | chpasswd && 
-echo "New password is '${pw}'"
-
+if [ -n "$RANDOM_PW" ];then
+  pw=$(python3 /tmp/genpw -q -s -l 12) && \
+  echo "root:$pw" | chpasswd && 
+  echo "New password is '${pw}'"
+fi
 # Start nginx forked
 nginx -V
 nginx &
