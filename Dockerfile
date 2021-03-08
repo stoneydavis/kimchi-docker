@@ -49,7 +49,7 @@ RUN apt-get install -y --no-install-recommends \
     libvirt-daemon-system libvirt-clients nfs-common sosreport open-iscsi \
     libguestfs-tools libnl-route-3-dev
 RUN apt-get install -y --no-install-recommends \
-    apt-utils gettext procps python3-openssl python3-distro
+    apt-utils gettext procps python3-openssl python3-distro python3-distutils
 
 RUN dpkg -i /tmp/wok-$WOK_VERSION-0.debian.noarch.deb; echo "Systemd sucks so this fails"
 RUN dpkg -i /tmp/kimchi-$KIMCHI_VERSION-0.noarch.deb
